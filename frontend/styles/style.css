@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;800&display=swap');
+.headline-font {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: #676342;
+    font-size: 60px;
+    text-align: center;
+    align-self: center;
+}
+
+.dark-button {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    background-color: #676342;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    align-self: center;
+    border: 2px solid #565337;
+    height: 40px;
+}
+
+.light-button {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    background-color: #989365;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    align-self: center;
+    border: 2px solid #676342;
+    height: 40px;
+}
+
+.common-text-area {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    color: #565337;
+    background-color: white;
+    border-radius: 50px;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    border: 1px solid #BEB77A;
+}
+
+.field-label {
+    width: 150px;
+    height:35px;
+    text-align: center;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    -webkit-text-stroke: 0.5px #989365;
+    border-radius: 50px 0 0 50px;
+    background-color: #BEB77A;
+    border: 2px solid #989365;
+}
+
+.back-button {
+    align-self: start;
+    color: white;
+    font-size: 20px;
+    background-color: #989365;
+    border-radius: 50px;
+    height: 40px;
+    border: 2px solid #676342;
+    position: fixed;
+    top: 5px;
+}
+
+.text-field {
+    background-color: white;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: -20px;
+    width: 250px;
+    height: 35px;
+    border-radius: 50px;
+    border: 2px solid #BEB77A;
+    padding: 0;
+    box-shadow: none !important;
+    outline: none;
+}
+
+vaadin-text-field.text-field::part(input-field) {
+    background: none;
+}
+
+vaadin-password-field.text-field::part(input-field) {
+    background: none;
+}
+
+.disabled_button {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    background-color: #C1C1C1;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    align-self: center;
+    border: 2px solid #979797;
+    height: 40px;
+}
+
+--vaadin-input-field-error-color {
+    color: #565337;
+}
+
+.common-text {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    color: #565337;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    padding-bottom: 20px;
+}
+
+.ok-button {
+    position: absolute;
+    bottom: 0;
+}
+
+vaadin-dialog-overlay.dialog::part(overlay) {
+    border-radius: 50px;
+    border: 1px solid #BEB77A;
+    box-shadow: none;
+}
+
