@@ -1,7 +1,7 @@
 package com.frobbery.gamification.ui.interactor;
 
-import com.frobbery.gamification.dto.AuthorizeDto;
-import com.frobbery.gamification.dto.RegistryDto;
+import com.frobbery.gamification.util.dto.AuthorizeDto;
+import com.frobbery.gamification.util.dto.RegistryDto;
 
 public interface UIInteractor {
 
@@ -9,5 +9,9 @@ public interface UIInteractor {
 
     void registerUser(RegistryDto registryDto);
 
-    boolean authorizeUser(AuthorizeDto authorizeDto);
+    void authorizeUser(AuthorizeDto authorizeDto);
+
+    int getAvailableLevelsNum();
+
+    int getLastOpenLevelNum(String userEmail);
 }

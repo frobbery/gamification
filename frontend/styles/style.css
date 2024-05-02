@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;800&display=swap');
+@import url("https://dev-cats.github.io/code-snippets/JetBrainsMono.css");
 .headline-font {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 800;
@@ -20,6 +21,7 @@
     align-self: center;
     border: 2px solid #565337;
     height: 40px;
+    justify-content: center;
 }
 
 .light-button {
@@ -96,7 +98,14 @@ vaadin-password-field.text-field::part(input-field) {
     background: none;
 }
 
-.disabled_button {
+vaadin-text-area.code-area::part(input-field) {
+    background: none;
+    font-family: "JetBrains Mono", sans-serif;
+    color: white;
+    font-size: 16px;
+}
+
+.disabled-level {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-size: 20px;
     background-color: #C1C1C1;
@@ -107,6 +116,20 @@ vaadin-password-field.text-field::part(input-field) {
     align-self: center;
     border: 2px solid #979797;
     height: 40px;
+}
+
+.dark-level {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    background-color: #676342;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    align-self: center;
+    border: 2px solid #565337;
+    height: 40px;
+    justify-content: center;
 }
 
 --vaadin-input-field-error-color {
@@ -134,3 +157,33 @@ vaadin-dialog-overlay.dialog::part(overlay) {
     box-shadow: none;
 }
 
+.top-layout {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}
+
+.default-animation {
+    height: 482px;
+    width: 500px;
+    border-radius: 50px;
+}
+
+.code-area {
+    background: #302c2c;
+    border-radius: 50px;
+    height: 354px;
+    width: 500px;
+    color: white;
+    font-size: 16px;
+}
+
+.circle-button {
+    background-color: #989365;
+    border-radius: 41px;
+    color: white;
+    border: 2px solid #676342;
+    height: 41px;
+    width: 41px;
+    justify-content: center;
+}

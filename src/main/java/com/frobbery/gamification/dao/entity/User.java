@@ -1,7 +1,9 @@
-package com.frobbery.gamification.entity;
+package com.frobbery.gamification.dao.entity;
 
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -14,4 +16,6 @@ public class User {
     private String email;
 
     private String passWord;
+
+    private List<Level> levels;
 }

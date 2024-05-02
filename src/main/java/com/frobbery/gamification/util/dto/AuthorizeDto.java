@@ -1,4 +1,4 @@
-package com.frobbery.gamification.dto;
+package com.frobbery.gamification.util.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

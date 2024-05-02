@@ -1,10 +1,9 @@
-package com.frobbery.gamification.dto;
+package com.frobbery.gamification.util.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
 
 @Data
 @Builder

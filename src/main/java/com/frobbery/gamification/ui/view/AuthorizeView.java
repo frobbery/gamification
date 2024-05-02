@@ -1,20 +1,22 @@
 package com.frobbery.gamification.ui.view;
 
-import com.frobbery.gamification.dto.AuthorizeDto;
 import com.frobbery.gamification.ui.component.PasswordFieldWithLabel;
 import com.frobbery.gamification.ui.component.TextFieldWithLabel;
 import com.frobbery.gamification.ui.presenter.authorize.AuthorizePresenterInput;
 import com.frobbery.gamification.ui.presenter.authorize.AuthorizePresenterInputImpl;
 import com.frobbery.gamification.ui.presenter.authorize.AuthorizePresenterOutput;
+import com.frobbery.gamification.util.dto.AuthorizeDto;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 
-import static com.frobbery.gamification.ui.util.UiUtils.*;
+import static com.frobbery.gamification.ui.util.UiUtils.createDarkButton;
+import static com.frobbery.gamification.ui.util.UiUtils.createGoBackButton;
+import static com.frobbery.gamification.ui.util.UiUtils.createHeadLineLayout;
+import static com.frobbery.gamification.ui.util.UiUtils.setDefaultLayoutStyle;
 
 @Route(value = "authorize")
 @CssImport(value = "./styles/style.css")
@@ -30,6 +32,7 @@ public class AuthorizeView extends ViewOutput implements AuthorizePresenterOutpu
 
     public AuthorizeView(AuthorizePresenterInputImpl authorizePresenter) {
         this.authorizePresenter = authorizePresenter;
+        authorizePresenter.setPresenterOutput(this);
         init();
     }
 
@@ -43,9 +46,7 @@ public class AuthorizeView extends ViewOutput implements AuthorizePresenterOutpu
     private void initHeadLine() {
         add(goBackButton);
         setAlignSelf(Alignment.START, goBackButton);
-        var headLine = new NativeLabel("Авторизация");
-        headLine.addClassName("headline-font");
-        headLine.setWidth("90%");
+        var headLine = createHeadLineLayout("Авторизация");
         add(headLine);
     }
 

@@ -1,13 +1,14 @@
-package com.frobbery.gamification.mapper;
+package com.frobbery.gamification.util.mapper;
 
-import com.frobbery.gamification.dto.RegistryDto;
-import com.frobbery.gamification.entity.User;
+import com.frobbery.gamification.util.dto.RegistryDto;
+import com.frobbery.gamification.dao.entity.User;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 
 @Component
 public class UserRegistryMapper implements Mapper<RegistryDto, User> {
+    //TODO encoding password
     @Override
     public User map(RegistryDto registryDto) {
         if (isNull(registryDto)) {

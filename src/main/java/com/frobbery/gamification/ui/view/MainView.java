@@ -1,16 +1,17 @@
 package com.frobbery.gamification.ui.view;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.Route;
 
-import static com.frobbery.gamification.ui.util.UiUtils.*;
+import static com.frobbery.gamification.ui.util.UiUtils.createDarkButton;
+import static com.frobbery.gamification.ui.util.UiUtils.createHeadLineLayout;
+import static com.frobbery.gamification.ui.util.UiUtils.createLightButton;
+import static com.frobbery.gamification.ui.util.UiUtils.setDefaultLayoutStyle;
 
 @Route
 @CssImport(value = "./styles/style.css")
@@ -34,9 +35,7 @@ public class MainView extends VerticalLayout {
     }
 
     private void initHeadLine() {
-        var headLine = new NativeLabel("ОБУЧИСЬ ПРОГРАММИРОВАНИЮ, ИГРАЯ!");
-        headLine.addClassName("headline-font");
-        headLine.setWidth("90%");
+        var headLine = createHeadLineLayout("ОБУЧИСЬ ПРОГРАММИРОВАНИЮ, ИГРАЯ!");
         add(headLine);
     }
 
@@ -59,6 +58,6 @@ public class MainView extends VerticalLayout {
     private void enableButtonsListeners() {
         registryButton.addClickListener(event -> registryButton.getUI().ifPresent(ui -> ui.navigate(RegistryView.class)));
         authorizeButton.addClickListener(event -> authorizeButton.getUI().ifPresent(ui -> ui.navigate(AuthorizeView.class)));
-        continueButton.addClickListener(event -> continueButton.getUI().ifPresent(ui -> ui.navigate("levels")));
+        continueButton.addClickListener(event -> continueButton.getUI().ifPresent(ui -> ui.navigate(LevelsView.class)));
     }
 }

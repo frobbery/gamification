@@ -1,26 +1,24 @@
 package com.frobbery.gamification.ui.view;
 
-import com.frobbery.gamification.dto.RegistryDto;
 import com.frobbery.gamification.ui.component.PasswordFieldWithLabel;
 import com.frobbery.gamification.ui.component.TextFieldWithLabel;
-import com.frobbery.gamification.ui.dialog.NotificationDialog;
 import com.frobbery.gamification.ui.presenter.registry.RegistryPresenterInput;
-import com.frobbery.gamification.ui.presenter.registry.RegistryPresenterInputImpl;
 import com.frobbery.gamification.ui.presenter.registry.RegistryPresenterOutput;
+import com.frobbery.gamification.util.dto.RegistryDto;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
-import org.springframework.stereotype.Component;
 
-import static com.frobbery.gamification.ui.util.UiUtils.*;
+import static com.frobbery.gamification.ui.util.UiUtils.createDarkButton;
+import static com.frobbery.gamification.ui.util.UiUtils.createGoBackButton;
+import static com.frobbery.gamification.ui.util.UiUtils.createHeadLineLayout;
+import static com.frobbery.gamification.ui.util.UiUtils.setDefaultLayoutStyle;
 
 @Route(value = "registry")
 @CssImport(value = "./styles/style.css")
-@Component
 public class RegistryView extends ViewOutput implements RegistryPresenterOutput {
 
     private final RegistryPresenterInput registryPresenter;
@@ -52,9 +50,7 @@ public class RegistryView extends ViewOutput implements RegistryPresenterOutput 
 
     private void initHeadLine() {
         add(goBackButton);
-        var headLine = new NativeLabel("Регистрация");
-        headLine.addClassName("headline-font");
-        headLine.setWidth("90%");
+        var headLine = createHeadLineLayout("Регистрация");
         add(headLine);
     }
 

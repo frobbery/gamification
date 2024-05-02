@@ -1,9 +1,11 @@
 package com.frobbery.gamification.ui.presenter.authorize;
 
-import com.frobbery.gamification.dto.AuthorizeDto;
-import com.frobbery.gamification.exception.UserNotFoundException;
 import com.frobbery.gamification.ui.interactor.UIInteractor;
+import com.frobbery.gamification.util.dto.AuthorizeDto;
+import com.frobbery.gamification.util.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,16 +18,16 @@ public class AuthorizePresenterInputImpl implements AuthorizePresenterInput {
 
     public void tryAuthorize(AuthorizeDto authorizeDto) {
         try {
-            var authorizationComplete = interactor.authorizeUser(authorizeDto);
-            if (authorizationComplete)  {
-                authorizePresenterOutput.goToLevelsPage();
+            interactor.authorizeUser(authorizeDto);
+            authorizePresenterOutput.goToLevelsPage();
+        } catch (InternalAuthenticationServiceException iase) {
+            if (iase.getCause() instanceof UserNotFoundException) {
+                authorizePresenterOutput.showErrorDialog(iase.getMessage());
             } else {
-                authorizePresenterOutput.showErrorDialog("Неверный пароль");
+                authorizePresenterOutput.showErrorDialog("Произошла ошибка во время авторизации. Повторите попытку позже.");
             }
-        } catch (UserNotFoundException unfe) {
-            authorizePresenterOutput.showErrorDialog(unfe.getMessage());
-        } catch (Exception e) {
-            authorizePresenterOutput.showErrorDialog("Произошла ошибка во время авторизации. Повторите попытку позже.");
+        } catch (BadCredentialsException bce) {
+            authorizePresenterOutput.showErrorDialog("Неверный пароль");
         }
     }
 

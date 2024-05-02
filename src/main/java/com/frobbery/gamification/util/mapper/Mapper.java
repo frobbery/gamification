@@ -1,4 +1,4 @@
-package com.frobbery.gamification.mapper;
+package com.frobbery.gamification.util.mapper;
 
 public interface Mapper<E, T> {
 

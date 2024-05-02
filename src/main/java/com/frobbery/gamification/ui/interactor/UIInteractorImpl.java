@@ -1,9 +1,9 @@
 package com.frobbery.gamification.ui.interactor;
 
-import com.frobbery.gamification.dto.AuthorizeDto;
-import com.frobbery.gamification.dto.RegistryDto;
-import com.frobbery.gamification.exception.UserNotFoundException;
-import com.frobbery.gamification.service.UserService;
+import com.frobbery.gamification.service.level.LevelService;
+import com.frobbery.gamification.util.dto.AuthorizeDto;
+import com.frobbery.gamification.util.dto.RegistryDto;
+import com.frobbery.gamification.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 public class UIInteractorImpl implements UIInteractor{
 
     private final UserService userService;
+
+    private final LevelService levelService;
 
     @Override
     public boolean checkIfUserExists(RegistryDto registryDto) {
@@ -24,7 +26,17 @@ public class UIInteractorImpl implements UIInteractor{
     }
 
     @Override
-    public boolean authorizeUser(AuthorizeDto authorizeDto) {
-        return userService.authorize(authorizeDto);
+    public void authorizeUser(AuthorizeDto authorizeDto) {
+        userService.authorize(authorizeDto);
+    }
+
+    @Override
+    public int getAvailableLevelsNum() {
+        return levelService.getAllAvailableNum();
+    }
+
+    @Override
+    public int getLastOpenLevelNum(String userEmail) {
+        return levelService.getLastOpenNum(userEmail);
     }
 }

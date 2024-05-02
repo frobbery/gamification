@@ -1,6 +1,6 @@
 package com.frobbery.gamification.ui.presenter.registry;
 
-import com.frobbery.gamification.dto.RegistryDto;
+import com.frobbery.gamification.util.dto.RegistryDto;
 import com.frobbery.gamification.ui.interactor.UIInteractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
