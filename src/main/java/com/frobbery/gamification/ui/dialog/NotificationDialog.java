@@ -38,9 +38,9 @@ public class NotificationDialog extends Dialog {
 
         var label = new NativeLabel(notificationText);
         label.setWidthFull();
-        label.addClassName("common-text");
+        label.addClassName("common-text-with-padding");
 
-        okButton.addClassName("ok-button");
+        okButton.addClassName("bottom-position");
 
         dialogLayout.add(label, okButton);
         add(dialogLayout);

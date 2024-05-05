@@ -10,7 +10,29 @@
     align-self: center;
 }
 
-.dark-button {
+.right-headline-font {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: #676342;
+    font-size: 60px;
+    text-align: start;
+    align-self: start;
+    margin-top: 30px;
+    margin-left: 70px;
+}
+
+.small-headline-font {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: #676342;
+    font-size: 40px;
+    text-align: center;
+    align-self: center;
+}
+
+.dark-label {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-size: 20px;
     background-color: #676342;
@@ -47,6 +69,8 @@
     align-content: center;
     align-self: center;
     border: 1px solid #BEB77A;
+    width: 400px;
+    height: 100px;
 }
 
 .field-label {
@@ -64,15 +88,14 @@
 }
 
 .back-button {
-    align-self: start;
     color: white;
     font-size: 20px;
     background-color: #989365;
     border-radius: 50px;
     height: 40px;
     border: 2px solid #676342;
-    position: fixed;
-    top: 5px;
+    position: absolute;
+    top: 5px
 }
 
 .text-field {
@@ -103,6 +126,8 @@ vaadin-text-area.code-area::part(input-field) {
     font-family: "JetBrains Mono", sans-serif;
     color: white;
     font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .disabled-level {
@@ -136,7 +161,7 @@ vaadin-text-area.code-area::part(input-field) {
     color: #565337;
 }
 
-.common-text {
+.common-text-with-padding {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-size: 20px;
     color: #565337;
@@ -146,8 +171,39 @@ vaadin-text-area.code-area::part(input-field) {
     padding-bottom: 20px;
 }
 
-.ok-button {
+.common-text {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 20px;
+    color: #565337;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+}
+
+.level-description {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #565337;
+    -webkit-text-stroke: 0.5px #676342;
+    text-align: center;
+    padding-top: 20px;
+    width: 450px;
+}
+
+.level-hint {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-size: 14px;
+    color: #989365;
+    -webkit-text-stroke: 0.5px #676342;
+    text-align: center;
+    padding-bottom: 10px;
+    width: 450px
+}
+
+.bottom-position {
     position: absolute;
+    align-self: center;
     bottom: 0;
 }
 
@@ -158,21 +214,24 @@ vaadin-dialog-overlay.dialog::part(overlay) {
 }
 
 .top-layout {
-    position: fixed;
+    position: absolute;
     top: 5px;
     right: 5px;
+    justify-content: center;
 }
 
 .default-animation {
-    height: 482px;
+    height: 452px;
     width: 500px;
+    margin-top: 20px;
     border-radius: 50px;
+    background: black;
+    color: white;
 }
 
 .code-area {
     background: #302c2c;
     border-radius: 50px;
-    height: 354px;
     width: 500px;
     color: white;
     font-size: 16px;
@@ -186,4 +245,32 @@ vaadin-dialog-overlay.dialog::part(overlay) {
     height: 41px;
     width: 41px;
     justify-content: center;
+    text-align: center;
+}
+
+.to-the-right {
+    margin-left: 20px;
+    z-index: 2;
+}
+
+.to-the-right {
+    align-self: start;
+    margin-left: 20px;
+    z-index: 2;
+}
+
+.text-area {
+    color: #565337;
+    background-color: white;
+    border-radius: 50px;
+    text-align: center;
+    align-content: center;
+    border: 1px solid #BEB77A;
+    width: 500px;
+    margin-top: -25px;
+    z-index: 1;
+}
+
+.upper {
+    margin-top: -40px;
 }

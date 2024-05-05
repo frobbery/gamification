@@ -42,8 +42,6 @@ public class MainView extends VerticalLayout {
     private void initTextArea() {
         var textArea = new NativeLabel("Для возможности сохранять уровни и достижения, необходимо войти");
         textArea.addClassName("common-text-area");
-        textArea.setWidth("400px");
-        textArea.setHeight("100px");
         add(textArea);
     }
 
@@ -56,8 +54,8 @@ public class MainView extends VerticalLayout {
     }
 
     private void enableButtonsListeners() {
-        registryButton.addClickListener(event -> registryButton.getUI().ifPresent(ui -> ui.navigate(RegistryView.class)));
-        authorizeButton.addClickListener(event -> authorizeButton.getUI().ifPresent(ui -> ui.navigate(AuthorizeView.class)));
-        continueButton.addClickListener(event -> continueButton.getUI().ifPresent(ui -> ui.navigate(LevelsView.class)));
+        registryButton.addClickListener(event -> registryButton.getUI().ifPresent(ui -> ui.navigate("registry")));
+        authorizeButton.addClickListener(event -> authorizeButton.getUI().ifPresent(ui -> ui.navigate("authorize")));
+        continueButton.addClickListener(event -> continueButton.getUI().ifPresent(ui -> ui.navigate("levels/1")));
     }
 }

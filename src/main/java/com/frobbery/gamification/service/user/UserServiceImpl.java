@@ -11,6 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -36,5 +39,19 @@ public class UserServiceImpl implements UserService {
         var authToken = new UsernamePasswordAuthenticationToken(authorizeDto.getEmail(), authorizeDto.getPassword());
         var authentication = authenticationProvider.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        updateTimePeriod(authorizeDto.getEmail());
+    }
+
+    private void updateTimePeriod(String email) {
+        var user = userRepository.findByEmail(email).orElseThrow();
+        var periodBetweenLastAuthorization = Period.between(user.getLastAuthorizationDate(), LocalDate.now());
+        var enteredYesterday = periodBetweenLastAuthorization.getYears() == 0 &&
+                periodBetweenLastAuthorization.getMonths() == 0 && periodBetweenLastAuthorization.getDays() == 1;
+        if (enteredYesterday) {
+            userRepository.updateEntryPeriodByEmail(email, user.getCurrentEntryPeriod());
+        } else if (!user.getLastAuthorizationDate().equals(LocalDate.now())) {
+            userRepository.updateEntryPeriodByEmail(email, 1);
+        }
+        userRepository.updateAuthorizationDateByEmail(email, LocalDate.now());
     }
 }

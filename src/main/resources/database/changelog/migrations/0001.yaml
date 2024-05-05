@@ -1,0 +1,195 @@
+databaseChangeLog:
+- changeSet:
+    id: create user, level, achievement and received
+    author: yupuzina
+    changes:
+      - createTable:
+          ifNotExists: true
+          tableName: user
+          columns:
+            - column:
+                name: id
+                type: bigserial
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_user
+            - column:
+                name: nick_name
+                type: varchar(50)
+                constraints:
+                  unique: true
+                  nullable: false
+            - column:
+                name: email
+                type: varchar(50)
+                constraints:
+                  unique: true
+                  nullable: false
+            - column:
+                name: password
+                type: varchar(100)
+                constraints:
+                  nullable: false
+            - column:
+                name: last_authorization_date
+                type: date
+                constraints:
+                  nullable: false
+            - column:
+                name: current_entry_period
+                type: int
+                constraints:
+                  nullable: false
+
+      - createTable:
+          ifNotExists: true
+          tableName: achievement
+          columns:
+            - column:
+                name: id
+                type: bigserial
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_achievement
+            - column:
+                name: name
+                type: varchar(100)
+                constraints:
+                  unique: true
+                  nullable: false
+            - column:
+                name: description
+                type: text
+                constraints:
+                  nullable: false
+            - column:
+                name: entry_period
+                type: int
+                constraints:
+                  nullable: false
+
+      - createTable:
+          ifNotExists: true
+          tableName: level
+          columns:
+            - column:
+                name: id
+                type: bigserial
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_level
+            - column:
+                name: number
+                type: int
+                constraints:
+                  unique: true
+                  nullable: false
+            - column:
+                name: description
+                type: text
+                constraints:
+                  nullable: false
+            - column:
+                name: hint
+                type: text
+                constraints:
+                  nullable: false
+            - column:
+                name: initial_code
+                type: text
+                constraints:
+                  nullable: false
+            - column:
+                name: success_message
+                type: text
+                constraints:
+                  nullable: false
+            - column:
+                name: achievement_id
+                type: bigserial
+                constraints:
+                  nullable: false
+
+      - addForeignKeyConstraint:
+          baseColumnNames: achievement_id
+          baseTableName: level
+          referencedColumnNames: id
+          referencedTableName: achievement
+          constraintName: fk_level_achievement_id
+
+      - createTable:
+          ifNotExists: true
+          tableName: received_achievement
+          columns:
+            - column:
+                name: id
+                type: bigserial
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: pk_received_achievement
+            - column:
+                name: user_id
+                type: bigserial
+                constraints:
+                  nullable: false
+            - column:
+                name: achievement_id
+                type: bigserial
+                constraints:
+                  nullable: false
+            - column:
+                name: receiveDate
+                type: date
+                constraints:
+                  nullable: false
+
+      - addForeignKeyConstraint:
+          baseColumnNames: user_id
+          baseTableName: received_achievement
+          referencedColumnNames: id
+          referencedTableName: user
+          constraintName: fk_received_achievement_user_id
+
+      - addForeignKeyConstraint:
+          baseColumnNames: achievement_id
+          baseTableName: received_achievement
+          referencedColumnNames: id
+          referencedTableName: achievement
+          constraintName: fk_received_achievement_achievement_id
+
+      - createTable:
+          ifNotExists: true
+          tableName: user_level
+          columns:
+            - column:
+                name: user_id
+                type: bigserial
+                constraints:
+                  nullable: false
+            - column:
+                name: level_id
+                type: bigserial
+                constraints:
+                  nullable: false
+
+      - addForeignKeyConstraint:
+          baseColumnNames: user_id
+          baseTableName: user_level
+          referencedColumnNames: id
+          referencedTableName: user
+          constraintName: fk_user_level_user_id
+
+      - addForeignKeyConstraint:
+          baseColumnNames: level_id
+          baseTableName: user_level
+          referencedColumnNames: id
+          referencedTableName: level
+          constraintName: fk_user_level_level_id
+
+      - addPrimaryKey:
+          tableName: user_level
+          columnNames: user_id, level_id
+
+      - addUniqueConstraint:
+          tableName: user_level
+          columnNames: user_id, level_id

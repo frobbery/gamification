@@ -1,21 +1,55 @@
 package com.frobbery.gamification.dao.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "nick_name")
     private String nickName;
 
     private String email;
 
     private String passWord;
 
+    @Column(name = "last_authorization_date")
+    private LocalDate lastAuthorizationDate;
+
+    @Column(name = "current_entry_period")
+    private int currentEntryPeriod;
+
+    @ManyToMany(targetEntity = Level.class, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 5)
+    @JoinTable(name = "user_level", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "level_id"))
     private List<Level> levels;
 }

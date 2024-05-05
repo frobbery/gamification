@@ -38,7 +38,7 @@ public class Configuration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/levels*")
+                        .requestMatchers("/levels", "/personal-cabinet")
                         .authenticated().anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/authorize")

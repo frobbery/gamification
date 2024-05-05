@@ -1,12 +1,15 @@
 package com.frobbery.gamification.ui.presenter.levels;
 
 import com.frobbery.gamification.ui.presenter.PresenterInput;
+import org.springframework.security.core.Authentication;
 
 public interface LevelsPresenterInput extends PresenterInput<LevelsPresenterOutput> {
 
     int getAvailableLevelsNum();
 
-    int getLastOpenLevelNum(String userEmail);
+    int getLastOpenLevelNum(Authentication authentication);
 
     void goToLevel(int levelNum);
+
+    void checkForTimedAchievements(Authentication authentication);
 }

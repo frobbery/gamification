@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -27,8 +28,10 @@ public class UserRepositoryMock implements UserRepository {
                 .nickName("nick")
                 .email("email@gmail.com")
                 .passWord(encoder.encode("password"))
-                .levels(List.of(Level.builder().num(1).description("first").build(),
-                        Level.builder().num(2).description("second").build()))
+                .levels(List.of(Level.builder().number(1).description("first").build(),
+                        Level.builder().number(2).description("second").build()))
+                .lastAuthorizationDate(LocalDate.now())
+                .currentEntryPeriod(1)
                 .build());
     }
 
@@ -55,9 +58,26 @@ public class UserRepositoryMock implements UserRepository {
     public int getLastAvailableLevelByEmail(String email) {
         return findByEmail(email)
                 .map(user -> user.getLevels().stream()
-                        .max(Comparator.comparing(Level::getNum))
-                        .map(Level::getNum)
+                        .max(Comparator.comparing(Level::getNumber))
+                        .map(Level::getNumber)
                         .orElse(1))
                 .orElse(1);
+    }
+
+    @Override
+    public void updateEntryPeriodByEmail(String email, int currentEntryPeriod) {
+        var user = findByEmail(email).orElseThrow();
+        user.setCurrentEntryPeriod(currentEntryPeriod);
+    }
+
+    @Override
+    public void updateAuthorizationDateByEmail(String email, LocalDate now) {
+        var user = findByEmail(email).orElseThrow();
+        user.setLastAuthorizationDate(now);
+    }
+
+    @Override
+    public void addNewLevelToUser(Optional<User> user, Optional<Level> newLevel) {
+
     }
 }

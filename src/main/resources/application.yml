@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gamification
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: true
+    change-log: database/changelog/db.changelog-master.yaml
+
+vaadin:
+  launch-browser: true

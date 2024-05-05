@@ -1,8 +1,13 @@
 package com.frobbery.gamification.ui.presenter.levels;
 
 import com.frobbery.gamification.ui.interactor.UIInteractor;
+import com.frobbery.gamification.util.dto.AchievementDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -18,14 +23,23 @@ public class LevelsPresenterInputImpl implements LevelsPresenterInput {
     }
 
     @Override
-    public int getLastOpenLevelNum(String userEmail) {
+    public int getLastOpenLevelNum(Authentication authentication) {
+        var userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
         return interactor.getLastOpenLevelNum(userEmail);
     }
 
     @Override
     public void goToLevel(int levelNum) {
-        //TODO add goingtolevel
         presenterOutput.goToLevel(levelNum);
+    }
+
+    @Override
+    public void checkForTimedAchievements(Authentication authentication) {
+        var userEmail = ((UserDetails) authentication.getPrincipal()).getUsername();
+        List<AchievementDto> newAchievements = interactor.getNewTimeAchievementsOfUser(userEmail);
+        for (AchievementDto newAchievement: newAchievements) {
+            presenterOutput.showAchievementDialog(newAchievement);
+        }
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface UserService {
     void register(RegistryDto registryDto);
 
     void authorize(AuthorizeDto authorizeDto);
+
+
 }
