@@ -8,5 +8,5 @@ public interface SingleLevelPresenterInput extends PresenterInput<SingleLevelPre
 
     LevelDto getCurrentLevel(int levelNum);
 
-    void checkCode(Authentication auth, String code, int levelNumber);
+    void checkCode(Authentication auth, int levelNumber, String initialCode, String code);
 }

@@ -2,7 +2,7 @@ package com.frobbery.gamification.ui.presenter.authorize;
 
 import com.frobbery.gamification.ui.interactor.UIInteractor;
 import com.frobbery.gamification.util.dto.AuthorizeDto;
-import com.frobbery.gamification.util.exception.UserNotFoundException;
+import com.frobbery.gamification.service.user.authentication.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;

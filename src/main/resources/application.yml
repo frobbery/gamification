@@ -9,5 +9,9 @@ spring:
     enabled: true
     change-log: database/changelog/db.changelog-master.yaml
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
 vaadin:
   launch-browser: true

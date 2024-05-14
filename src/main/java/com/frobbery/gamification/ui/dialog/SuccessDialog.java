@@ -64,7 +64,10 @@ public class SuccessDialog extends Dialog {
     }
 
     private void enableButtonListeners() {
-        nextLevelButton.addClickListener(event -> goToNextLevelAction.run());
+        nextLevelButton.addClickListener(event -> {
+            close();
+            goToNextLevelAction.run();
+        });
         retryButton.addClickListener(event -> close());
         goToMainPageButton.addClickListener(event -> {
             if (!(authentication instanceof AnonymousAuthenticationToken)) {

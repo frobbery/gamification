@@ -6,6 +6,7 @@ import com.frobbery.gamification.util.dto.AchievementDto;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public abstract class ViewOutput extends VerticalLayout {
+
     protected void showErrorDialog(String errorText) {
         var dialog = new NotificationDialog(errorText);
         dialog.open();

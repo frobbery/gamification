@@ -11,5 +11,5 @@ public interface UserService {
 
     void authorize(AuthorizeDto authorizeDto);
 
-
+    void updateTimePeriod(String email);
 }

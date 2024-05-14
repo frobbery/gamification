@@ -1,9 +1,11 @@
 package com.frobbery.gamification.ui.interactor;
 
+import com.frobbery.gamification.check.service.CheckCodeService;
 import com.frobbery.gamification.service.achievement.AchievementService;
 import com.frobbery.gamification.service.level.LevelService;
 import com.frobbery.gamification.util.dto.AchievementDto;
 import com.frobbery.gamification.util.dto.AuthorizeDto;
+import com.frobbery.gamification.util.dto.CheckCodeDto;
 import com.frobbery.gamification.util.dto.LevelDto;
 import com.frobbery.gamification.util.dto.ReceivedAchievementDto;
 import com.frobbery.gamification.util.dto.RegistryDto;
@@ -23,6 +25,8 @@ public class UIInteractorImpl implements UIInteractor{
 
     private final AchievementService achievementService;
 
+    private final CheckCodeService checkCodeService;
+
     @Override
     public boolean checkIfUserExists(RegistryDto registryDto) {
         return userService.checkIfExists(registryDto.getNickName(), registryDto.getEmail());
@@ -36,10 +40,11 @@ public class UIInteractorImpl implements UIInteractor{
     @Override
     public void authorizeUser(AuthorizeDto authorizeDto) {
         userService.authorize(authorizeDto);
+        userService.updateTimePeriod(authorizeDto.getEmail());
     }
 
     @Override
-    public int getAvailableLevelsNum() {
+    public long getAvailableLevelsNum() {
         return levelService.getAllAvailableNum();
     }
 
@@ -69,9 +74,17 @@ public class UIInteractorImpl implements UIInteractor{
     }
 
     @Override
-    public AchievementDto addLevelAchievementToUser(String userEmail, int levelNumber) {
+    public AchievementDto addLevelAchievementToUser(String userEmail, int levelNumber, boolean levelLast) {
         var achievement = levelService.getLevelAchievement(levelNumber);
-        levelService.addNewLevelToUser(userEmail, levelNumber + 1);
+        achievementService.addAchievementToUser(userEmail, achievement.getName());
+        if (!levelLast) {
+            levelService.addNewLevelToUser(userEmail, levelNumber + 1);
+        }
         return achievement;
+    }
+
+    @Override
+    public boolean checkCode(CheckCodeDto checkCodeDto) {
+        return checkCodeService.check(checkCodeDto);
     }
 }

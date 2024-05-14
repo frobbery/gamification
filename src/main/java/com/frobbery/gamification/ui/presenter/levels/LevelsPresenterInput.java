@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 
 public interface LevelsPresenterInput extends PresenterInput<LevelsPresenterOutput> {
 
-    int getAvailableLevelsNum();
+    long getAvailableLevelsNum();
 
     int getLastOpenLevelNum(Authentication authentication);
 

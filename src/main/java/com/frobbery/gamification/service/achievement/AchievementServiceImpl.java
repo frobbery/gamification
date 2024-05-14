@@ -1,10 +1,10 @@
 package com.frobbery.gamification.service.achievement;
 
-import com.frobbery.gamification.dao.achievement.AchievementRepository;
+import com.frobbery.gamification.dao.AchievementRepository;
 import com.frobbery.gamification.dao.entity.Achievement;
 import com.frobbery.gamification.dao.entity.ReceivedAchievement;
-import com.frobbery.gamification.dao.received_achievement.ReceivedAchievementRepository;
-import com.frobbery.gamification.dao.user.UserRepository;
+import com.frobbery.gamification.dao.ReceivedAchievementRepository;
+import com.frobbery.gamification.dao.UserRepository;
 import com.frobbery.gamification.util.dto.AchievementDto;
 import com.frobbery.gamification.util.dto.ReceivedAchievementDto;
 import com.frobbery.gamification.util.mapper.Mapper;
@@ -32,25 +32,42 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public List<AchievementDto> getNewTimedAchievementsOfUser(String userEmail) {
         var user = userRepository.findByEmail(userEmail).orElseThrow();
-        var achievements = achievementRepository.getAllWithEntryPeriod(user.getCurrentEntryPeriod());
-        var receivedAchievements = receivedAchievementRepository.getAllAchievementsOfUserId(user.getId());
-        receivedAchievements
-                .forEach(receivedAchievement -> achievements.remove(receivedAchievement.getAchievement()));
+        var receivedAchievementsIds = receivedAchievementRepository.findAllByUserId(user.getId()).stream()
+                .map(receivedAchievement -> receivedAchievement.getAchievement().getId()).toList();
+        var achievements = achievementRepository.findAllByEntryPeriod(user.getCurrentEntryPeriod()).stream()
+                .filter(achievement -> !receivedAchievementsIds.contains(achievement.getId())).toList();
 
-        achievements.forEach(achievement -> receivedAchievementRepository.save(
-                ReceivedAchievement.builder()
-                        .user(user)
-                        .achievement(achievement)
-                        .receiveDate(LocalDate.now())
-                        .build()));
+        achievements
+                .forEach(achievement -> receivedAchievementRepository.save(
+                        ReceivedAchievement.builder()
+                                .user(user)
+                                .achievement(achievement)
+                                .receiveDate(LocalDate.now())
+                                .build()));
         return achievements.stream().map(achievementMapper::map).collect(Collectors.toList());
     }
 
     @Override
     public List<ReceivedAchievementDto> getReceivedAchievementOfUser(String userEmail) {
         var userId = userRepository.findByEmail(userEmail).orElseThrow().getId();
-        return receivedAchievementRepository.getAllAchievementsOfUserId(userId).stream()
+        return receivedAchievementRepository.findAllByUserId(userId).stream()
                 .map(receivedAchievementMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addAchievementToUser(String userEmail, String achievementName) {
+        var user = userRepository.findByEmail(userEmail).orElseThrow();
+        var receivedAchievementsIds = receivedAchievementRepository.findAllByUserId(user.getId()).stream()
+                .map(receivedAchievement -> receivedAchievement.getAchievement().getId()).toList();
+        var achievement = achievementRepository.findByName(achievementName).orElseThrow();
+        if (!receivedAchievementsIds.contains(achievement.getId())) {
+            receivedAchievementRepository.save(
+                    ReceivedAchievement.builder()
+                            .user(userRepository.findByEmail(userEmail).orElseThrow())
+                            .achievement(achievementRepository.findByName(achievementName).orElseThrow())
+                            .receiveDate(LocalDate.now())
+                            .build());
+        }
     }
 }

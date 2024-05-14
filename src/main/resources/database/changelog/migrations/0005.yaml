@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert into level
+      author: yupuzina
+      changes:
+        - loadUpdateData:
+            primaryKey: id
+            file: data/levels.csv
+            relativeToChangelogFile: true
+            separator: /
+            encoding: UTF-8
+            tableName: level

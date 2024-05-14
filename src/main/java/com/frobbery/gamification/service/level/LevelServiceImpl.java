@@ -2,8 +2,8 @@ package com.frobbery.gamification.service.level;
 
 import com.frobbery.gamification.dao.entity.Achievement;
 import com.frobbery.gamification.dao.entity.Level;
-import com.frobbery.gamification.dao.level.LevelRepository;
-import com.frobbery.gamification.dao.user.UserRepository;
+import com.frobbery.gamification.dao.LevelRepository;
+import com.frobbery.gamification.dao.UserRepository;
 import com.frobbery.gamification.util.dto.AchievementDto;
 import com.frobbery.gamification.util.dto.LevelDto;
 import com.frobbery.gamification.util.mapper.Mapper;
@@ -23,13 +23,18 @@ public class LevelServiceImpl implements LevelService {
     private final Mapper<Achievement, AchievementDto> achievementMapper;
 
     @Override
-    public int getAllAvailableNum() {
+    public long getAllAvailableNum() {
         return levelRepository.count();
     }
 
     @Override
     public int getLastOpenNum(String userEmail) {
-        return userRepository.getLastAvailableLevelByEmail(userEmail);
+        var opened = userRepository.getLastOpenLevelNumberByEmail(userEmail);
+        if (opened == 0) {
+            addNewLevelToUser(userEmail, 1);
+            return 1;
+        }
+        return opened;
     }
 
     @Override
@@ -51,8 +56,11 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public void addNewLevelToUser(String userEmail, int levelNumber) {
-        var newLevel = levelRepository.findByNumber(levelNumber);
-        var user = userRepository.findByEmail(userEmail);
-        userRepository.addNewLevelToUser(user, newLevel);
+        var newLevel = levelRepository.findByNumber(levelNumber).orElseThrow();
+        var user = userRepository.findByEmailAndFetchLevelsEagerly(userEmail).orElseThrow();
+        if (!user.getLevels().contains(newLevel)) {
+            user.getLevels().add(newLevel);
+            userRepository.save(user);
+        }
     }
 }

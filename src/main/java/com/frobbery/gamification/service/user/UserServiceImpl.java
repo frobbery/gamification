@@ -1,7 +1,7 @@
 package com.frobbery.gamification.service.user;
 
 import com.frobbery.gamification.dao.entity.User;
-import com.frobbery.gamification.dao.user.UserRepository;
+import com.frobbery.gamification.dao.UserRepository;
 import com.frobbery.gamification.util.dto.AuthorizeDto;
 import com.frobbery.gamification.util.dto.RegistryDto;
 import com.frobbery.gamification.util.mapper.Mapper;
@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkIfExists(String nickName, String email) {
-        return userRepository.findUserByNickNameOrEmail(nickName, email).isPresent();
+        return userRepository.findByNickNameOrEmail(nickName, email).isPresent();
     }
 
     @Override
@@ -39,16 +40,17 @@ public class UserServiceImpl implements UserService {
         var authToken = new UsernamePasswordAuthenticationToken(authorizeDto.getEmail(), authorizeDto.getPassword());
         var authentication = authenticationProvider.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        updateTimePeriod(authorizeDto.getEmail());
     }
 
-    private void updateTimePeriod(String email) {
+    @Override
+    @Transactional
+    public void updateTimePeriod(String email) {
         var user = userRepository.findByEmail(email).orElseThrow();
         var periodBetweenLastAuthorization = Period.between(user.getLastAuthorizationDate(), LocalDate.now());
         var enteredYesterday = periodBetweenLastAuthorization.getYears() == 0 &&
                 periodBetweenLastAuthorization.getMonths() == 0 && periodBetweenLastAuthorization.getDays() == 1;
         if (enteredYesterday) {
-            userRepository.updateEntryPeriodByEmail(email, user.getCurrentEntryPeriod());
+            userRepository.updateEntryPeriodByEmail(email, user.getCurrentEntryPeriod() + 1);
         } else if (!user.getLastAuthorizationDate().equals(LocalDate.now())) {
             userRepository.updateEntryPeriodByEmail(email, 1);
         }

@@ -18,7 +18,7 @@ public class LevelsPresenterInputImpl implements LevelsPresenterInput {
     private LevelsPresenterOutput presenterOutput;
 
     @Override
-    public int getAvailableLevelsNum() {
+    public long getAvailableLevelsNum() {
         return interactor.getAvailableLevelsNum();
     }
 

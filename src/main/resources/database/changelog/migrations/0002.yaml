@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert into user
+      author: yupuzina
+      changes:
+        - loadUpdateData:
+            primaryKey: id
+            file: data/users.csv
+            relativeToChangelogFile: true
+            separator: ;
+            encoding: UTF-8
+            tableName: user

@@ -2,6 +2,7 @@ package com.frobbery.gamification.ui.interactor;
 
 import com.frobbery.gamification.util.dto.AchievementDto;
 import com.frobbery.gamification.util.dto.AuthorizeDto;
+import com.frobbery.gamification.util.dto.CheckCodeDto;
 import com.frobbery.gamification.util.dto.LevelDto;
 import com.frobbery.gamification.util.dto.ReceivedAchievementDto;
 import com.frobbery.gamification.util.dto.RegistryDto;
@@ -16,7 +17,7 @@ public interface UIInteractor {
 
     void authorizeUser(AuthorizeDto authorizeDto);
 
-    int getAvailableLevelsNum();
+    long getAvailableLevelsNum();
 
     int getLastOpenLevelNum(String userEmail);
 
@@ -28,5 +29,7 @@ public interface UIInteractor {
 
     boolean isLastLevel(int levelNumber);
 
-    AchievementDto addLevelAchievementToUser(String userEmail, int levelNumber);
+    AchievementDto addLevelAchievementToUser(String userEmail, int levelNumber, boolean levelLast);
+
+    boolean checkCode(CheckCodeDto checkCodeDto);
 }

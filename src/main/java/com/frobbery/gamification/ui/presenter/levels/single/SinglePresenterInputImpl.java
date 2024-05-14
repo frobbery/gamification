@@ -1,6 +1,7 @@
 package com.frobbery.gamification.ui.presenter.levels.single;
 
 import com.frobbery.gamification.ui.interactor.UIInteractor;
+import com.frobbery.gamification.util.dto.CheckCodeDto;
 import com.frobbery.gamification.util.dto.LevelDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -29,15 +30,19 @@ public class SinglePresenterInputImpl implements SingleLevelPresenterInput{
     }
 
     @Override
-    public void checkCode(Authentication auth, String code, int levelNumber) {
-        //TODO добавить проверку кода
-        boolean result = true;//interactor.checkCode(code, levelNumber);
-        if (result) {
+    public void checkCode(Authentication auth, int levelNumber, String initialCode, String code) {
+        var checkCodeDto = CheckCodeDto.builder()
+                .levelNumber(levelNumber)
+                .initialCode(initialCode)
+                .code(code)
+                .build();
+        boolean checkResult = interactor.checkCode(checkCodeDto);
+        if (checkResult) {
             boolean isLastLevel = interactor.isLastLevel(levelNumber);
             if (nonNull(auth) && !(auth instanceof AnonymousAuthenticationToken)) {
                 var userEmail = ((UserDetails) auth.getPrincipal()).getUsername();
-                var achievement = interactor.addLevelAchievementToUser(userEmail, levelNumber);
-                presenterOutput.showSuccessDialog(isLastLevel);
+                var achievement = interactor.addLevelAchievementToUser(userEmail, levelNumber, isLastLevel);
+                presenterOutput.showSuccessDialog(false);
                 presenterOutput.showAchievementDialog(achievement);
             } else {
                 presenterOutput.showSuccessDialog(isLastLevel);

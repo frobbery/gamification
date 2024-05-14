@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,18 +28,21 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "\"user\"")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "nick_name")
     private String nickName;
 
     private String email;
 
-    private String passWord;
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "last_authorization_date")
     private LocalDate lastAuthorizationDate;

@@ -1,5 +1,6 @@
 package com.frobbery.gamification.dao.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,5 +35,6 @@ public class ReceivedAchievement {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "receive_date")
     private LocalDate receiveDate;
 }

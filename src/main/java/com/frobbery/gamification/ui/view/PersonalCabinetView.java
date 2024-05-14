@@ -67,6 +67,7 @@ public class PersonalCabinetView extends ViewOutput implements PersonalCabinetPr
         for (int i = 0; i < layoutsNum; i++) {
             var currentLayout = new HorizontalLayout();
             currentLayout.setJustifyContentMode(JustifyContentMode.START);
+            currentLayout.setVerticalComponentAlignment(Alignment.START);
             int currentAchievementNum = 7;
             if (i == layoutsNum - 1) {
                 currentAchievementNum = (receivedAchievements.size() - i * 7) % 7;

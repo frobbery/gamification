@@ -5,7 +5,7 @@ import com.frobbery.gamification.util.dto.LevelDto;
 
 public interface LevelService {
 
-    int getAllAvailableNum();
+    long getAllAvailableNum();
 
     int getLastOpenNum(String userEmail);
 

@@ -1,7 +1,7 @@
 package com.frobbery.gamification.service.user.authentication;
 
-import com.frobbery.gamification.dao.user.UserRepository;
-import com.frobbery.gamification.util.exception.UserNotFoundException;
+import com.frobbery.gamification.dao.UserRepository;
+import com.frobbery.gamification.service.user.authentication.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -28,6 +28,7 @@ public class FailureDialog extends Dialog {
         setWidth("600px");
         init();
         enableButtonListeners();
+        open();
     }
 
     private void init() {
@@ -53,7 +54,7 @@ public class FailureDialog extends Dialog {
 
         var buttonLayout = new HorizontalLayout(goToMainPageButton, retryButton);
         buttonLayout.setWidthFull();
-        buttonLayout.setVerticalComponentAlignment(FlexComponent.Alignment.STRETCH);
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         buttonLayout.addClassName("bottom-position");
 
         dialogLayout.add(labelLayout, buttonLayout);

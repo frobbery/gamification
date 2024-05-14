@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert into achievement
+      author: yupuzina
+      changes:
+        - loadUpdateData:
+            primaryKey: id
+            file: data/achievements.csv
+            relativeToChangelogFile: true
+            separator: ;
+            encoding: UTF-8
+            tableName: achievement

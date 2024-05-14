@@ -26,5 +26,5 @@ public class Achievement {
     private String description;
 
     @Column(name = "entry_period")
-    private int entryPeriod;
+    private Integer entryPeriod;
 }

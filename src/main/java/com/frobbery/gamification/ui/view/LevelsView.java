@@ -76,9 +76,9 @@ public class LevelsView extends ViewOutput implements LevelsPresenterOutput {
             var currentLevelsLayout = new HorizontalLayout();
             currentLevelsLayout.setWidthFull();
             currentLevelsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-            int currentLevelsNum = 8;
+            long currentLevelsNum = 8;
             if (i == layoutNum - 1) {
-                currentLevelsNum = (levelsNum - i * 8) % 8;
+                currentLevelsNum = (levelsNum - i * 8L) % 8;
             }
             for (int j = 0; j < (currentLevelsNum > 0 ? currentLevelsNum : 8); j++) {
                 int levelNum = i * 8 + j + 1;

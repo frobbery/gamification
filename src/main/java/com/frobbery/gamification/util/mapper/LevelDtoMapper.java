@@ -12,7 +12,7 @@ public class LevelDtoMapper implements Mapper<Level, LevelDto> {
                 .number(level.getNumber())
                 .description(level.getDescription())
                 .hint(level.getHint())
-                .initialCode(level.getInitialCode())
+                .initialCode(level.getInitialCode().replace("\\n", "\n").replace("\\t", "\t"))
                 .successMessage(level.getSuccessMessage())
                 .build();
     }

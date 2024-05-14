@@ -10,4 +10,9 @@ class GamificationApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void application() {
+		var args = new String [0];
+		GamificationApplication.main(args);
+	}
 }

@@ -10,4 +10,6 @@ public interface AchievementService {
     List<AchievementDto> getNewTimedAchievementsOfUser(String userEmail);
 
     List<ReceivedAchievementDto> getReceivedAchievementOfUser(String userEmail);
+
+    void addAchievementToUser(String userEmail, String achievementName);
 }
