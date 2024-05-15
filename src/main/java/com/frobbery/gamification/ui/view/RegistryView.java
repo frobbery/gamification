@@ -29,7 +29,7 @@ public class RegistryView extends ViewOutput implements RegistryPresenterOutput 
 
     private final TextFieldWithLabel nickName = new TextFieldWithLabel("Никнейм");
 
-    private final PasswordFieldWithLabel password = new PasswordFieldWithLabel("Никнейм");
+    private final PasswordFieldWithLabel password = new PasswordFieldWithLabel("Пароль");
 
     private final Button registryButton = createDarkButton("Зарегистрироваться");
 
