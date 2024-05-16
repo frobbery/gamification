@@ -1,9 +1,9 @@
 package com.frobbery.gamification.service.level;
 
-import com.frobbery.gamification.dao.entity.Achievement;
-import com.frobbery.gamification.dao.entity.Level;
 import com.frobbery.gamification.dao.LevelRepository;
 import com.frobbery.gamification.dao.UserRepository;
+import com.frobbery.gamification.dao.entity.Achievement;
+import com.frobbery.gamification.dao.entity.Level;
 import com.frobbery.gamification.util.dto.AchievementDto;
 import com.frobbery.gamification.util.dto.LevelDto;
 import com.frobbery.gamification.util.mapper.Mapper;
@@ -58,7 +58,7 @@ public class LevelServiceImpl implements LevelService {
     public void addNewLevelToUser(String userEmail, int levelNumber) {
         var newLevel = levelRepository.findByNumber(levelNumber).orElseThrow();
         var user = userRepository.findByEmailAndFetchLevelsEagerly(userEmail).orElseThrow();
-        if (!user.getLevels().contains(newLevel)) {
+        if (!user.getLevels().stream().map(Level::getId).toList().contains(newLevel.getId())) {
             user.getLevels().add(newLevel);
             userRepository.save(user);
         }

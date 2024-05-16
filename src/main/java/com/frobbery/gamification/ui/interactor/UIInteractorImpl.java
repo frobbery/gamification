@@ -76,11 +76,11 @@ public class UIInteractorImpl implements UIInteractor{
     @Override
     public AchievementDto addLevelAchievementToUser(String userEmail, int levelNumber, boolean levelLast) {
         var achievement = levelService.getLevelAchievement(levelNumber);
-        achievementService.addAchievementToUser(userEmail, achievement.getName());
+        var achievementReceived = achievementService.addAchievementToUser(userEmail, achievement.getName());
         if (!levelLast) {
             levelService.addNewLevelToUser(userEmail, levelNumber + 1);
         }
-        return achievement;
+        return achievementReceived ? achievement : null;
     }
 
     @Override

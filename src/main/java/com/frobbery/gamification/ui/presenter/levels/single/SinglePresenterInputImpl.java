@@ -42,8 +42,10 @@ public class SinglePresenterInputImpl implements SingleLevelPresenterInput{
             if (nonNull(auth) && !(auth instanceof AnonymousAuthenticationToken)) {
                 var userEmail = ((UserDetails) auth.getPrincipal()).getUsername();
                 var achievement = interactor.addLevelAchievementToUser(userEmail, levelNumber, isLastLevel);
-                presenterOutput.showSuccessDialog(false);
-                presenterOutput.showAchievementDialog(achievement);
+                presenterOutput.showSuccessDialog(isLastLevel);
+                if (nonNull(achievement)) {
+                    presenterOutput.showAchievementDialog(achievement);
+                }
             } else {
                 presenterOutput.showSuccessDialog(isLastLevel);
             }

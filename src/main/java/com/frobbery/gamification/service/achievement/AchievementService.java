@@ -11,5 +11,5 @@ public interface AchievementService {
 
     List<ReceivedAchievementDto> getReceivedAchievementOfUser(String userEmail);
 
-    void addAchievementToUser(String userEmail, String achievementName);
+    boolean addAchievementToUser(String userEmail, String achievementName);
 }

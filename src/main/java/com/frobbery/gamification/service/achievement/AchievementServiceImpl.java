@@ -56,7 +56,7 @@ public class AchievementServiceImpl implements AchievementService {
     }
 
     @Override
-    public void addAchievementToUser(String userEmail, String achievementName) {
+    public boolean addAchievementToUser(String userEmail, String achievementName) {
         var user = userRepository.findByEmail(userEmail).orElseThrow();
         var receivedAchievementsIds = receivedAchievementRepository.findAllByUserId(user.getId()).stream()
                 .map(receivedAchievement -> receivedAchievement.getAchievement().getId()).toList();
@@ -68,6 +68,8 @@ public class AchievementServiceImpl implements AchievementService {
                             .achievement(achievementRepository.findByName(achievementName).orElseThrow())
                             .receiveDate(LocalDate.now())
                             .build());
+            return true;
         }
+        return false;
     }
 }
