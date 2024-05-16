@@ -50,10 +50,11 @@ public class SingleLevelView extends ViewOutput implements BeforeEnterObserver, 
         if (!event.getTrigger().equals(NavigationTrigger.UI_NAVIGATE)) {
             redirectToMainPage();
             event.rerouteTo("");
+        } else {
+            int levelNum = Integer.parseInt(event.getRouteParameters().get("levelNum").orElse("1"));
+            this.currentLevel = presenterInput.getCurrentLevel(levelNum);
+            init();
         }
-        int levelNum = Integer.parseInt(event.getRouteParameters().get("levelNum").orElse("1"));
-        this.currentLevel = presenterInput.getCurrentLevel(levelNum);
-        init();
     }
 
     public SingleLevelView(SingleLevelPresenterInput presenterInput) {

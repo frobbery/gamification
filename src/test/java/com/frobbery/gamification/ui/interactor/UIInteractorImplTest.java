@@ -176,13 +176,30 @@ class UIInteractorImplTest {
         var levelNumber = 1;
         var expectedAchievement = mock(AchievementDto.class);
         when(levelService.getLevelAchievement(levelNumber)).thenReturn(expectedAchievement);
+        when(achievementService.addAchievementToUser(userEmail, expectedAchievement.getName())).thenReturn(true);
 
         //when
         var actualAchievement = sut.addLevelAchievementToUser(userEmail, levelNumber, false);
 
         //then
         assertEquals(expectedAchievement, actualAchievement);
-        verify(achievementService, times(1)).addAchievementToUser(userEmail, expectedAchievement.getName());
+        verify(levelService, times(1)).addNewLevelToUser(userEmail, levelNumber + 1);
+    }
+
+    @Test
+    void shouldNotAddLevelAchievementToUser_whenAchievementReceived() {
+        //given
+        var userEmail = "userEmail";
+        var levelNumber = 1;
+        var expectedAchievement = mock(AchievementDto.class);
+        when(levelService.getLevelAchievement(levelNumber)).thenReturn(expectedAchievement);
+        when(achievementService.addAchievementToUser(userEmail, expectedAchievement.getName())).thenReturn(false);
+
+        //when
+        var actualAchievement = sut.addLevelAchievementToUser(userEmail, levelNumber, false);
+
+        //then
+        assertThat(actualAchievement).isNull();
         verify(levelService, times(1)).addNewLevelToUser(userEmail, levelNumber + 1);
     }
 
@@ -192,6 +209,7 @@ class UIInteractorImplTest {
         var userEmail = "userEmail";
         var levelNumber = 1;
         var expectedAchievement = mock(AchievementDto.class);
+        when(achievementService.addAchievementToUser(userEmail, expectedAchievement.getName())).thenReturn(true);
         when(levelService.getLevelAchievement(levelNumber)).thenReturn(expectedAchievement);
 
         //when
@@ -199,7 +217,6 @@ class UIInteractorImplTest {
 
         //then
         assertEquals(expectedAchievement, actualAchievement);
-        verify(achievementService, times(1)).addAchievementToUser(userEmail, expectedAchievement.getName());
         verify(levelService, times(0)).addNewLevelToUser(userEmail, levelNumber + 1);
     }
 

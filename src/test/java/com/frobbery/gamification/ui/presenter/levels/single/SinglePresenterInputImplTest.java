@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -79,6 +80,34 @@ class SinglePresenterInputImplTest {
         //then
         verify(presenterOutput, times(1)).showSuccessDialog(false);
         verify(presenterOutput, times(1)).showAchievementDialog(achievement);
+    }
+
+    @Test
+    void shouldShowSuccess_whenCheckTrueAndAuthenticatedAndAchievementNotReceived() {
+        //given
+        var authentication = mock(Authentication.class);
+        var levelNumber = 0;
+        var initialCode = "initialCode";
+        var code = "code";
+        var userEmail = "userEmail";
+        var checkCodeDto = CheckCodeDto.builder()
+                .levelNumber(levelNumber)
+                .initialCode(initialCode)
+                .code(code)
+                .build();
+        when(interactor.checkCode(checkCodeDto)).thenReturn(true);
+        when(interactor.isLastLevel(levelNumber)).thenReturn(false);
+        when(authentication.getPrincipal()).thenReturn(new UserDetailsImpl(User.builder()
+                .email(userEmail)
+                .build()));
+        when(interactor.addLevelAchievementToUser(userEmail, levelNumber, false)).thenReturn(null);
+
+        //when
+        sut.checkCode(authentication, levelNumber, initialCode, code);
+
+        //then
+        verify(presenterOutput, times(1)).showSuccessDialog(false);
+        verify(presenterOutput, times(0)).showAchievementDialog(any());
     }
 
     @Test

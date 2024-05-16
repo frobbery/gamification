@@ -47,12 +47,14 @@ public class LevelTestServiceImpl implements LevelTestService {
         return levelTestDto;
     }
 
-    private void generateRandomClassName(LevelTestDto levelTestDto) {
+    protected LevelTestDto generateRandomClassName(LevelTestDto levelTestDto) {
         var generatedRandomSuffix = UUID.randomUUID().toString().replace("-", "_");
         var newClassName = levelTestDto.getClassName() + generatedRandomSuffix;
         var newCode = levelTestDto.getCode().replace("LevelTest implements", MessageFormat.format("LevelTest{0} implements", generatedRandomSuffix));
-        levelTestDto.setClassName(newClassName);
-        levelTestDto.setCode(newCode);
+        return LevelTestDto.builder()
+                .className(newClassName)
+                .code(newCode)
+                .build();
     }
 
     private boolean runLevelTestClass(LevelTestDto levelTestDto) {
