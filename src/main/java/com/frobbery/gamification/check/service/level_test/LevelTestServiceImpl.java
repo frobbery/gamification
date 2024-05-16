@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.ToolProvider;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class LevelTestServiceImpl implements LevelTestService {
     @Override
     public boolean testLevelCode(int levelNumber, String code) {
         var levelTestDtoWithInsertedCode = getLevelTestDtoWithInsertedCode(levelNumber, code);
+        generateRandomClassName(levelTestDtoWithInsertedCode);
         return runLevelTestClass(levelTestDtoWithInsertedCode);
     }
 
@@ -42,6 +45,14 @@ public class LevelTestServiceImpl implements LevelTestService {
                 .orElseThrow();
         levelTestDto.setCode(levelTestDto.getCode().replace(INSERT, code));
         return levelTestDto;
+    }
+
+    private void generateRandomClassName(LevelTestDto levelTestDto) {
+        var generatedRandomSuffix = UUID.randomUUID().toString().replace("-", "_");
+        var newClassName = levelTestDto.getClassName() + generatedRandomSuffix;
+        var newCode = levelTestDto.getCode().replace("LevelTest implements", MessageFormat.format("LevelTest{0} implements", generatedRandomSuffix));
+        levelTestDto.setClassName(newClassName);
+        levelTestDto.setCode(newCode);
     }
 
     private boolean runLevelTestClass(LevelTestDto levelTestDto) {
