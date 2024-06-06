@@ -63,6 +63,7 @@ public class LevelsView extends ViewOutput implements LevelsPresenterOutput {
     private void initHeadLine() {
         add(createHeadLineLayout("Продолжи игру"));
         add(continueButton);
+        continueButton.addClickListener(event -> presenterInput.goToLevel(presenterInput.getLastOpenLevelNum(authentication)));
         add(createHeadLineLayout("или выбери уровень для прохождения"));
     }
 

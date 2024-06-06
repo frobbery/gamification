@@ -35,7 +35,6 @@ public class LevelTestServiceImpl implements LevelTestService {
     @Override
     public boolean testLevelCode(int levelNumber, String code) {
         var levelTestDtoWithInsertedCode = getLevelTestDtoWithInsertedCode(levelNumber, code);
-        generateRandomClassName(levelTestDtoWithInsertedCode);
         return runLevelTestClass(levelTestDtoWithInsertedCode);
     }
 
@@ -45,16 +44,6 @@ public class LevelTestServiceImpl implements LevelTestService {
                 .orElseThrow();
         levelTestDto.setCode(levelTestDto.getCode().replace(INSERT, code));
         return levelTestDto;
-    }
-
-    protected LevelTestDto generateRandomClassName(LevelTestDto levelTestDto) {
-        var generatedRandomSuffix = UUID.randomUUID().toString().replace("-", "_");
-        var newClassName = levelTestDto.getClassName() + generatedRandomSuffix;
-        var newCode = levelTestDto.getCode().replace("LevelTest implements", MessageFormat.format("LevelTest{0} implements", generatedRandomSuffix));
-        return LevelTestDto.builder()
-                .className(newClassName)
-                .code(newCode)
-                .build();
     }
 
     private boolean runLevelTestClass(LevelTestDto levelTestDto) {
@@ -67,6 +56,7 @@ public class LevelTestServiceImpl implements LevelTestService {
             } else {
                 ClassLoader classLoader = manager.getClassLoader(null);
                 Class<?> clazz = classLoader.loadClass(levelTestDto.getClassName());
+                manager.resetClassLoader();
                 Object classInstance = clazz.getDeclaredConstructor().newInstance();
                 if (classInstance instanceof  LevelTestClass) {
                     return ((LevelTestClass) classInstance).getTestResult();

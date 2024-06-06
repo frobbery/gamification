@@ -146,7 +146,6 @@ class LevelTestServiceImplTest {
                 .build();
         when(levelTestRepository.findByLevelNumber(levelNumber)).thenReturn(Optional.of(levelTest));
         when(mapper.map(levelTest)).thenReturn(levelTestDto);
-        when(sut.generateRandomClassName(levelTestDto)).thenReturn(levelTestDto);
 
         //when
         var result = sut.testLevelCode(levelNumber, insertCode);

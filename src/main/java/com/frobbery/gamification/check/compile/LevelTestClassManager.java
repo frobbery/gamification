@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class LevelTestClassManager extends ForwardingJavaFileManager<JavaFileManager> {
     private final Map<String, LevelTestClassAsBytes> compiledClasses;
-    private final ClassLoader loader;
+    private ClassLoader loader;
 
     public LevelTestClassManager(StandardJavaFileManager standardManager) {
         super(standardManager);
@@ -21,6 +21,10 @@ public class LevelTestClassManager extends ForwardingJavaFileManager<JavaFileMan
     @Override
     public ClassLoader getClassLoader(Location location) {
         return loader;
+    }
+
+    public void resetClassLoader() {
+        this.loader = new LevelTestClassLoader(this.getClass().getClassLoader(), this);
     }
 
     @Override
